@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Aiogram WebApp Example</title>
+    <title>Выбор цвета</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 </head>
@@ -19,10 +19,16 @@
     });
     
     Telegram.WebApp.ready();
-    Telegram.WebApp.MainButton.setText('Choose Color').show().onClick(function () {
-        const data = JSON.stringify({hex: colorPicker.color.hexString, rgb: colorPicker.color.rgb});
+    Telegram.WebApp.MainButton.setText('Выбрать цвет').show().onClick(() => {
+        const color = colorPicker.color;
+        const data = JSON.stringify({ hex: color.hexString, rgb: color.rgb });
+        
+        console.log("Sending data:", data); // Лог для отладки
         Telegram.WebApp.sendData(data);
-        Telegram.WebApp.close();
+    });
+    
+    window.addEventListener("message", (event) => {
+        console.log("Received message:", event.data);
     });
     
     Telegram.WebApp.expand();
